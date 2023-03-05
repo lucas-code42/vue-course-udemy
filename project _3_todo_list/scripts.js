@@ -28,6 +28,11 @@ const app = {
         cleanAll: function () {
             this.tasks = []
             return
+        }, 
+
+        storeTodos() {
+            localStorage.setItem("todos", JSON.stringify(this.tasks));
+            return
         }
     },
 
@@ -38,10 +43,14 @@ const app = {
         } else {
             this.tasks = [];
         }
+        
+        return;
+    },
 
-        console.log(this.tasks);
-    }
-
+    // updated() {        
+    //     console.log("updated");
+    //     return;
+    // }
     
     // beforeCreate() {
     //     console.log("beforeCreate");
