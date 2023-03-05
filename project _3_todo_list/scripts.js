@@ -24,14 +24,9 @@ const app = {
             }
             return;
         },
-        
+
         cleanAll: function () {
             this.tasks = []
-            return
-        }, 
-
-        storeTodos() {
-            localStorage.setItem("todos", JSON.stringify(this.tasks));
             return
         }
     },
@@ -43,19 +38,19 @@ const app = {
         } else {
             this.tasks = [];
         }
-        
+
         return;
     },
 
-    // updated() {        
-    //     console.log("updated");
-    //     return;
-    // }
-    
+    updated() {
+        console.log("updated");
+        return;
+    }
+
     // beforeCreate() {
     //     console.log("beforeCreate");
     // },
-    
+
     // created() {
     //     console.log("created");
     // },
@@ -63,7 +58,7 @@ const app = {
     // beforeUpdate() {
     //     console.log("beforeUpdate");
     // }
-    
+
 }
 
 Vue.createApp(app).mount("#app");
