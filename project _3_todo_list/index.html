@@ -24,15 +24,19 @@
                     <div 
                         v-for="task in tasks"
                         class="single-todo"
-                        :class="{done : task.doned}"
-                        @click.stop="task.doned = !task.doned">
+                        :class="{done : task.done}"
+                        @click.stop="task.done = !task.done">
+                        
                         <p>{{ task.name }}</p>
                         
                     </div>
-
                 </div>
 
-                <button @click.stop="cleanAll()" class="clear">Limpar tudo</button>
+                <button 
+                    @click.stop="cleanAll()" 
+                    class="clear"
+                    v-if="tasks.length"
+                    >Limpar tudo</button>
 
                 <input type="text" placeholder="Escreva uma nova tarefa..." v-model="newTask.name">
                 <button @click.stop="addNewTask()" class="add">Adicionar</button>

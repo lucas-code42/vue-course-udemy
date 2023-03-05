@@ -5,18 +5,18 @@ const app = {
             tasks: [],
             newTask: {
                 name: "",
-                doned: false
+                done: false
             }
         }
     },
 
     methods: {
         addNewTask: function () {
-            if (this.newTask.name && this.newTask.doned === false) {
+            if (this.newTask.name && this.newTask.done === false) {
                 this.tasks.push(this.newTask);
                 this.newTask = {
                     name: null,
-                    doned: false
+                    done: false
                 };
             } else {
                 alert("Preencha o campo");
