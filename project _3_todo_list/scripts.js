@@ -18,6 +18,7 @@ const app = {
                     name: null,
                     done: false
                 };
+                localStorage.setItem("todos", JSON.stringify(this.tasks));
             } else {
                 alert("Preencha o campo");
             }
@@ -28,7 +29,21 @@ const app = {
             this.tasks = []
             return
         }
-    }
+    },
+
+    // life cycle Hooks --> ciclo de vida da aplicação
+    // beforeCreate() {
+    //     console.log("beforeCreate");
+    // },
+    
+    // created() {
+    //     console.log("created");
+    // },
+
+    // beforeUpdate() {
+    //     console.log("beforeUpdate");
+    // }
+    
 }
 
 Vue.createApp(app).mount("#app");
