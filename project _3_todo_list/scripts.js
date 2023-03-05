@@ -32,6 +32,17 @@ const app = {
     },
 
     // life cycle Hooks --> ciclo de vida da aplicação
+    created() {
+        if (localStorage.getItem("todos")) {
+            this.tasks = JSON.parse(localStorage.getItem("todos"));
+        } else {
+            this.tasks = [];
+        }
+
+        console.log(this.tasks);
+    }
+
+    
     // beforeCreate() {
     //     console.log("beforeCreate");
     // },
