@@ -15,9 +15,20 @@ const handlingForms = {
 
     data() {
         return {
-            members: window.members
+            members: window.members,
+            newMember: {
+                fname: null,
+                lname: null,
+                instrument: null
+            }
         }
     },
+    methods: {
+        addNewMember: function() {
+            this.members.push(this.newMember);
+            return
+        }
+    }
 
 };
 
