@@ -16,16 +16,17 @@ const handlingForms = {
     data() {
         return {
             members: window.members,
-            newMember: {
-                fname: null,
-                lname: null,
-                instrument: null
-            }
+            newMember: {}
         }
     },
     methods: {
         addNewMember: function() {
-            this.members.push(this.newMember);
+            if (this.newMember.fname && this.newMember.lname, this.newMember.instrument) {
+                this.members.push(this.newMember);
+                this.newMember = {} // limpa o formulario, por padrão vuejs usa 2 way data binding
+            } else {
+                alert("All fields must be filled")
+            }
             return
         }
     }
