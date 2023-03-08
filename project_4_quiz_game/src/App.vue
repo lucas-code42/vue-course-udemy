@@ -1,14 +1,13 @@
 <template>
     <div>
-        <h1 v-html="this.question"></h1>
+        <template v-if="this.question">
+            <h1 v-html="this.question"></h1>
 
-        <input type="radio" name="options" value="True" />
-
-        <label>True</label><br />
-
-        <input type="radio" name="options" value="False" />
-
-        <label>False</label><br />
+            <template v-for="(answer, index) in this.answers" :key="index">
+                <input type="radio" name="options" value="answer" />
+                <label v-html="answer"></label><br />
+            </template>
+        </template>
 
         <button class="send" type="button">Send</button>
     </div>
@@ -29,9 +28,13 @@ export default {
     computed: {
         answers() {
             var answers = JSON.parse(JSON.stringify(this.incorrect_answers)); // criando uma cópia da variavel
-            answers.splice(Math.round(Math.random() * answers.length), 0, this.correct_answer); // embaralhando array com as respostas
+            answers.splice(
+                Math.round(Math.random() * answers.length),
+                0,
+                this.correct_answer
+            ); // embaralhando array com as respostas
             return answers;
-        }
+        },
     },
 
     // life cycle hooks
@@ -40,7 +43,8 @@ export default {
             .get("https://opentdb.com/api.php?amount=1&category=18")
             .then((response) => {
                 this.question = response.data.results[0].question;
-                this.incorrect_answers = response.data.results[0].incorrect_answers;
+                this.incorrect_answers =
+                    response.data.results[0].incorrect_answers;
                 this.correct_answer = response.data.results[0].correct_answer;
 
                 console.log("1", this.question);
