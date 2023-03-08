@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Que ano nasceu Lucas Brandao?</h1>
+        <h1 v-html="this.question"></h1>
 
         <input type="radio" name="options" value="True" />
 
@@ -18,11 +18,37 @@
 export default {
     name: "App",
 
+    data() {
+        return {
+            question: null,
+            incorrect_answers: null,
+            correct_answer: null,
+        };
+    },
+
+    computed: {
+        answers() {
+            var answers = JSON.parse(JSON.stringify(this.incorrect_answers)); // criando uma cópia da variavel
+            answers.splice(Math.round(Math.random() * answers.length), 0, this.correct_answer); // embaralhando array com as respostas
+            return answers;
+        }
+    },
+
+    // life cycle hooks
     created() {
-        this.axios.get("https://opentdb.com/api.php?amount=1&category=18")
-        .then((response) => {
-            console.log(response.data.results[0]);
-        });
+        this.axios
+            .get("https://opentdb.com/api.php?amount=1&category=18")
+            .then((response) => {
+                this.question = response.data.results[0].question;
+                this.incorrect_answers = response.data.results[0].incorrect_answers;
+                this.correct_answer = response.data.results[0].correct_answer;
+
+                console.log("1", this.question);
+                console.log("2", this.incorrect_answers);
+                console.log("3", this.correct_answer);
+
+                console.log("4", response.data.results[0]);
+            });
     },
 };
 </script>
