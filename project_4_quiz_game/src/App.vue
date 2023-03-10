@@ -5,6 +5,7 @@
 
             <template v-for="(answer, index) in this.answers" :key="index">
                 <input
+                    :disabled="this.answer_submited"
                     type="radio"
                     name="options"
                     :value="answer"
@@ -13,7 +14,21 @@
                 <label v-html="answer"></label><br />
             </template>
 
-            <button @click="this.submit()" class="send" type="button">Send</button>
+            <button v-if="!this.answer_submited" @click="this.submit()" class="send" type="button">
+                Send
+            </button>
+
+            <section class="result" v-if="this.answer_submited">
+                <h4 v-if="this.chosen_answer === this.correct_answer">
+                    &#9989; You got it! The corret answer is
+                    "{{ this.correct_answer }}"
+                </h4>
+                <h4 v-if="this.chosen_answer != this.correct_answer">
+                    &#10060; You got it wrong! the corret answer is
+                    "{{ this.correct_answer }}"
+                </h4>
+                <button class="send" type="button">Next question</button>
+            </section>
         </template>
     </div>
 </template>
@@ -28,21 +43,23 @@ export default {
             incorrect_answers: null,
             correct_answer: null,
             chosen_answer: null,
+            answer_submited: null,
         };
     },
 
     methods: {
         submit() {
             if (!this.chosen_answer) {
-                alert("Pick one of the options")
+                alert("Pick one of the options");
             } else {
+                this.answer_submited = true;
                 if (this.chosen_answer === this.correct_answer) {
-                    alert("Acertou miseravi")
+                    console.log("Acertou miseravi");
                 } else {
-                    alert("Errou miseravi")
+                    console.log("Errou miseravi");
                 }
             }
-        }
+        },
     },
 
     computed: {
