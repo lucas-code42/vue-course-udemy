@@ -4,12 +4,17 @@
             <h1 v-html="this.question"></h1>
 
             <template v-for="(answer, index) in this.answers" :key="index">
-                <input type="radio" name="options" value="answer" />
+                <input
+                    type="radio"
+                    name="options"
+                    :value="answer"
+                    v-model="this.chosen_answer"
+                />
                 <label v-html="answer"></label><br />
             </template>
-        </template>
 
-        <button class="send" type="button">Send</button>
+            <button @click="this.submit()" class="send" type="button">Send</button>
+        </template>
     </div>
 </template>
 
@@ -22,7 +27,22 @@ export default {
             question: null,
             incorrect_answers: null,
             correct_answer: null,
+            chosen_answer: null,
         };
+    },
+
+    methods: {
+        submit() {
+            if (!this.chosen_answer) {
+                alert("Pick one of the options")
+            } else {
+                if (this.chosen_answer === this.correct_answer) {
+                    alert("Acertou miseravi")
+                } else {
+                    alert("Errou miseravi")
+                }
+            }
+        }
     },
 
     computed: {
@@ -40,7 +60,7 @@ export default {
     // life cycle hooks
     created() {
         this.axios
-            .get("https://opentdb.com/api.php?amount=1&category=18")
+            .get("https://opentdb.com/api.php?amount=1")
             .then((response) => {
                 this.question = response.data.results[0].question;
                 this.incorrect_answers =
