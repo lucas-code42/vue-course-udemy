@@ -47,7 +47,11 @@
 </template>
 
 <script>
+import  ScoreBoard  from "/components/ScoreBoard.vue";
+
 export default {
+    
+
     name: "App",
 
     data() {
@@ -77,6 +81,8 @@ export default {
         getNewQuestion() {
             this.answer_submited = null;
             this.chosen_answer = null;
+            this.question = null;
+            
             this.axios
                 .get("https://opentdb.com/api.php?amount=1")
                 .then((response) => {
