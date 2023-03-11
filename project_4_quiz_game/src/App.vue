@@ -14,20 +14,33 @@
                 <label v-html="answer"></label><br />
             </template>
 
-            <button v-if="!this.answer_submited" @click="this.submit()" class="send" type="button">
+            <button
+                v-if="!this.answer_submited"
+                @click="this.submit()"
+                class="send"
+                type="button"
+            >
                 Send
             </button>
 
             <section class="result" v-if="this.answer_submited">
-                <h4 v-if="this.chosen_answer === this.correct_answer">
-                    &#9989; You got it! The corret answer is
-                    "{{ this.correct_answer }}"
-                </h4>
-                <h4 v-if="this.chosen_answer != this.correct_answer">
-                    &#10060; You got it wrong! the corret answer is
-                    "{{ this.correct_answer }}"
-                </h4>
-                <button class="send" type="button">Next question</button>
+                <h4
+                    v-if="this.chosen_answer === this.correct_answer"
+                    v-html="
+                        '&#9989; You got it! The corret answer is' +
+                        this.correct_answer
+                    "
+                ></h4>
+                <h4
+                    v-if="this.chosen_answer != this.correct_answer"
+                    v-html="
+                        '&#10060; You got it wrong! the corret answer is' +
+                        this.correct_answer
+                    "
+                ></h4>
+                <button class="send" type="button" @click="this.getNewQuestion">
+                    Next question
+                </button>
             </section>
         </template>
     </div>
@@ -60,6 +73,26 @@ export default {
                 }
             }
         },
+
+        getNewQuestion() {
+            this.answer_submited = null;
+            this.chosen_answer = null;
+            this.axios
+                .get("https://opentdb.com/api.php?amount=1")
+                .then((response) => {
+                    this.question = response.data.results[0].question;
+                    this.incorrect_answers =
+                        response.data.results[0].incorrect_answers;
+                    this.correct_answer =
+                        response.data.results[0].correct_answer;
+
+                    console.log("1", this.question);
+                    console.log("2", this.incorrect_answers);
+                    console.log("3", this.correct_answer);
+
+                    console.log("4", response.data.results[0]);
+                });
+        },
     },
 
     computed: {
@@ -76,20 +109,7 @@ export default {
 
     // life cycle hooks
     created() {
-        this.axios
-            .get("https://opentdb.com/api.php?amount=1")
-            .then((response) => {
-                this.question = response.data.results[0].question;
-                this.incorrect_answers =
-                    response.data.results[0].incorrect_answers;
-                this.correct_answer = response.data.results[0].correct_answer;
-
-                console.log("1", this.question);
-                console.log("2", this.incorrect_answers);
-                console.log("3", this.correct_answer);
-
-                console.log("4", response.data.results[0]);
-            });
+        this.getNewQuestion();
     },
 };
 </script>
