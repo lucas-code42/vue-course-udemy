@@ -85,9 +85,6 @@ export default {
         },
 
         getNewQuestion() {
-            console.log("c", this.computer);
-            console.log("p", this.player);
-
             this.answer_submited = null;
             this.chosen_answer = null;
             this.question = null;
