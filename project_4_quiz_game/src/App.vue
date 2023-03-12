@@ -1,5 +1,7 @@
 <template>
     <div>
+        <ScoreBoard :player="this.player" :computer="this.computer"/>
+
         <template v-if="this.question">
             <h1 v-html="this.question"></h1>
 
@@ -47,12 +49,14 @@
 </template>
 
 <script>
-import  ScoreBoard  from "/components/ScoreBoard.vue";
+import ScoreBoard from "./components/ScoreBoard.vue";
 
 export default {
-    
-
     name: "App",
+
+    components: {
+        ScoreBoard,
+    },
 
     data() {
         return {
@@ -61,6 +65,8 @@ export default {
             correct_answer: null,
             chosen_answer: null,
             answer_submited: null,
+            player: 0,
+            computer: 0,
         };
     },
 
@@ -71,32 +77,30 @@ export default {
             } else {
                 this.answer_submited = true;
                 if (this.chosen_answer === this.correct_answer) {
-                    console.log("Acertou miseravi");
+                    this.player++;
                 } else {
-                    console.log("Errou miseravi");
+                    this.computer++;
                 }
             }
         },
 
         getNewQuestion() {
+            console.log("c", this.computer);
+            console.log("p", this.player);
+
             this.answer_submited = null;
             this.chosen_answer = null;
             this.question = null;
-            
             this.axios
                 .get("https://opentdb.com/api.php?amount=1")
                 .then((response) => {
                     this.question = response.data.results[0].question;
+
                     this.incorrect_answers =
                         response.data.results[0].incorrect_answers;
+
                     this.correct_answer =
                         response.data.results[0].correct_answer;
-
-                    console.log("1", this.question);
-                    console.log("2", this.incorrect_answers);
-                    console.log("3", this.correct_answer);
-
-                    console.log("4", response.data.results[0]);
                 });
         },
     },
@@ -112,10 +116,10 @@ export default {
             return answers;
         },
     },
-
     // life cycle hooks
     created() {
         this.getNewQuestion();
+
     },
 };
 </script>
