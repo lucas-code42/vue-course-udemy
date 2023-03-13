@@ -1,12 +1,22 @@
 <template>
-    <h3>Teste!!!</h3>
+    <div>
+
+        this is the Product Page
+        
+    </div>
 </template>
-
+  
 <script>
-export default {
-    name: "Product",
-    methods: {},
-};
-</script>
 
+export default {
+    name: 'Product',
+
+    methods: {
+
+    },
+
+}
+</script>
+  
 <style lang="scss"></style>
+  

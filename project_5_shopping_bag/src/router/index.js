@@ -14,13 +14,12 @@ const routes = [
     name: 'Basket',
     component: Basket
   },
-
   {
     path: '/product',
     name: 'Product',
     component: Product
   },
-  
+
 ]
 
 const router = createRouter({
